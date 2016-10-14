@@ -1,5 +1,7 @@
+# -*-coding:gbk-*-
 
-# coding: utf-8
+#数据集 ex14.csv 是关于中国各个省份的三项指标数值。请根据这些指标数值，将各个省份分为3类，并尝试归纳出各个类别的特点
+
 
 # In[67]:
 from __future__ import division
@@ -19,7 +21,7 @@ data=pd.read_csv('ex14.csv',header=0,index_col=0,encoding='gb18030')
 
 # In[69]:
 
-# 鏌ョ湅鍥惧舰
+# 查看图形
 fig = plt.figure()
 ax3D = fig.add_subplot(111, projection='3d')
 ax3D.scatter(data['DXBZ'],data['CZBZ'],data['WMBZ'],marker='o')
@@ -37,7 +39,7 @@ for linkage in ('ward', 'average', 'complete'):
     clustering.fit(data)
     cluster_pred = clustering.fit_predict(data)
     print 'clusters :',cluster_pred
-    data[u'绫诲瀷']=cluster_pred
+    data[u'类型']=cluster_pred
     print data
     fig = plt.figure()
     ax3D = fig.add_subplot(111, projection='3d')
@@ -46,7 +48,7 @@ for linkage in ('ward', 'average', 'complete'):
     ax3D.set_ylabel('CZBZ')
     ax3D.set_zlabel('WMBZ')
     plt.show()
-    print data.groupby([u'绫诲瀷']).mean()
+    print data.groupby([u'类型']).mean()
 
 
 # In[71]:
@@ -57,7 +59,7 @@ kmeans = KMeans(n_clusters=3)
 kmeans.fit(data)
 kmeans_pred = kmeans.fit_predict(data)
 print 'kmeans cluster:',kmeans_pred
-data[u'绫诲瀷']=kmeans_pred
+data[u'类型']=kmeans_pred
 print data
 fig = plt.figure()
 ax3D = fig.add_subplot(111, projection='3d')
@@ -66,7 +68,7 @@ ax3D.set_xlabel('DXBZ')
 ax3D.set_ylabel('CZBZ')
 ax3D.set_zlabel('WMBZ')
 plt.show()
-print data.groupby([u'绫诲瀷']).mean()
+print data.groupby([u'类型']).mean()
 
 
 # In[72]:
@@ -75,7 +77,7 @@ print data.groupby([u'绫诲瀷']).mean()
 db = DBSCAN(eps=2.2, min_samples=3)
 db.fit(data)
 db_pred=db.fit_predict(data)
-data[u'绫诲瀷']=db_pred
+data[u'类型']=db_pred
 print data
 print 'clster 1:',len(db_pred[db_pred==1])/len(db_pred)
 print 'clster 0:',len(db_pred[db_pred==0])/len(db_pred)
@@ -90,7 +92,7 @@ ax3D.set_xlabel('DXBZ')
 ax3D.set_ylabel('CZBZ')
 ax3D.set_zlabel('WMBZ')
 plt.show()
-print data.groupby([u'绫诲瀷']).mean()
+print data.groupby([u'类型']).mean()
 
 
 
